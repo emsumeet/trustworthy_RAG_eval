@@ -1,0 +1,8 @@
+review_group,primary_category,count
+Complete Evidence + EM Fail,Refusal despite sufficient evidence,4
+Complete Evidence + EM Fail,Final-hop reasoning / answer extraction failure,2
+Complete Evidence + EM Fail,Answer-type mismatch / insufficient abstraction,2
+Complete Evidence + EM Fail,Exact Match false negative / semantic-equivalence mismatch,2
+Incomplete Evidence + EM Pass,Partial evidence sufficient,5
+Incomplete Evidence + EM Pass,Partial evidence sufficient / possible parametric-knowledge assistance,4
+Incomplete Evidence + EM Pass,Alternative evidence / partial evidence sufficient,1
