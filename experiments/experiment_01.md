@@ -2,8 +2,7 @@
 
 ## Research Question
 
-How does retrieval depth (k) affect retrieval quality, evidence coverage,
-and factual reliability in a Retrieval-Augmented Generation system?
+How does retrieval depth affect evidence coverage and answer reliability in a Retrieval-Augmented Generation system?
 
 ---
 
@@ -11,186 +10,94 @@ and factual reliability in a Retrieval-Augmented Generation system?
 
 Increasing retrieval depth should initially improve evidence coverage.
 
-However, after a certain point, adding more retrieved documents may
-introduce irrelevant information and retrieval noise without improving
-answer reliability.
+However, increasing k also introduces more irrelevant context.
 
-Therefore, answer quality is not expected to improve monotonically as
-retrieval depth increases.
+Therefore, maximum retrieval depth may not necessarily produce maximum generation accuracy.
 
 ---
 
 ## Dataset
 
-HotpotQA — distractor configuration.
-
-Initial evaluation subset:
-
-- Split: validation
-- Sample size: 100 questions
-- Random seed: 42
-
-Each example contains:
-
-- question
-- gold answer
-- question type
-- difficulty level
-- supporting facts
-- candidate context documents
+```text
+HotpotQA
+Configuration: distractor
+Split: validation
+Sample size: 100
+Random seed: 42
+```
 
 ---
 
 ## Experimental Conditions
 
-The following configurations will be compared:
-
-1. No Retrieval
-2. RAG with k = 1
-3. RAG with k = 3
-4. RAG with k = 5
-5. RAG with k = 10
-
-The same generation model and prompt will be used for all RAG
-configurations.
-
-Only retrieval depth will change.
+```text
+No retrieval
+k = 1
+k = 3
+k = 5
+k = 10
+```
 
 ---
 
-## Retrieval Unit
+## Experiment 01A
 
-The initial retrieval unit will be a document/paragraph from the
-HotpotQA candidate context.
+### Objective
 
-Each context paragraph will be represented independently in the
-retrieval index.
+Evaluate retrieval performance independently of generation.
 
----
+### Metrics
 
-## Retrieval Method
-
-Initial baseline:
-
-Dense semantic retrieval using sentence embeddings and cosine similarity.
-
-The same embedding model will be used across all k conditions.
-
-Later experiments may compare:
-
-- BM25
-- dense retrieval
-- hybrid retrieval
-- reranking
+```text
+Supporting Document Recall@K
+Complete Evidence Rate@K
+```
 
 ---
 
-## Retrieval Metrics
+## Experiment 01B
 
-### Supporting Document Recall@K
+### Objective
 
-Measures whether the gold supporting documents appear in the top-k
-retrieved documents.
+Measure whether retrieval improvements translate into generation improvements.
 
-### Complete Evidence Recall@K
+### Metrics
 
-Measures whether all gold supporting documents required to answer the
-question are present in the top-k retrieved set.
-
-### Evidence Coverage
-
-Measures the proportion of required supporting evidence retrieved.
-
----
-
-## Generation Metrics
-
-### Exact Match
-
-Whether the generated answer exactly matches the gold answer after
-normalization.
-
-### Token-Level F1
-
-Measures overlap between the generated answer and gold answer.
-
-### Answer Faithfulness
-
-Measures whether the generated answer is supported by retrieved evidence.
-
-Faithfulness evaluation will be added after the baseline pipeline is
-working.
+```text
+Exact Match
+Token-Level F1
+```
 
 ---
 
 ## Controlled Variables
 
-The following will remain fixed:
+The following remain fixed:
 
-- dataset subset
-- random seed
-- embedding model
-- generation model
-- generation prompt
-- temperature
-- answer-length constraints
+```text
+Dataset
+Question subset
+Random seed
+Retriever
+Generator
+Prompt format
+Temperature
+Answer instructions
+```
 
-Only retrieval depth k will vary in Experiment 01.
+The primary independent variable is:
 
----
-
-## Outputs
-
-Results will be saved in machine-readable form.
-
-Example columns:
-
-question_id
-question
-gold_answer
-k
-retrieved_documents
-supporting_document_recall
-complete_evidence_retrieved
-generated_answer
-exact_match
-f1
-latency
+```text
+retrieval depth k
+```
 
 ---
 
-## Failure Analysis
+## Analysis
 
-Failed examples will later be categorized as:
+Results from retrieval and generation will be compared to determine whether:
 
-1. Required evidence not retrieved
-2. Only part of the required evidence retrieved
-3. Correct evidence retrieved but answer incorrect
-4. Irrelevant retrieval distracted the generator
-5. Correct answer generated despite missing evidence
-6. Unsupported or hallucinated answer
-
----
-
-## Initial Success Criterion
-
-The first experiment is not intended to prove that one value of k is
-universally optimal.
-
-The goal is to determine whether measurable trade-offs appear between:
-
-- retrieval depth
-- evidence coverage
-- answer accuracy
-- retrieval noise
-- computation cost
-
----
-
-## Reproducibility
-
-Random seed: 42
-
-Initial sample size: 100 HotpotQA validation examples.
-
-All experiment configurations and results will be version-controlled.
+1. greater evidence coverage improves answer accuracy;
+2. incomplete evidence leads to generation failures;
+3. additional distractors negatively affect generation;
+4. the generator sometimes succeeds despite retrieval failure.
