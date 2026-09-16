@@ -1,0 +1,13 @@
+k,failure_category,count,percentage
+1,Retrieval Failure + Generation Success,20,20.0
+1,Retrieval Failure + Generation Failure,80,80.0
+3,Retrieval Success + Generation Success,16,16.0
+3,Retrieval Success + Generation Failure,29,29.0
+3,Retrieval Failure + Generation Success,5,5.0
+3,Retrieval Failure + Generation Failure,50,50.0
+5,Retrieval Success + Generation Success,25,25.0
+5,Retrieval Success + Generation Failure,40,40.0
+5,Retrieval Failure + Generation Success,8,8.0
+5,Retrieval Failure + Generation Failure,27,27.0
+10,Retrieval Success + Generation Success,39,39.0
+10,Retrieval Success + Generation Failure,61,61.0
