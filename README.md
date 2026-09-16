@@ -147,46 +147,62 @@ This should **not** be interpreted as evidence that `k=10` is necessarily the op
 
 ## Experiment 01B — Retrieval Depth vs Answer Quality
 
-Experiment 01B investigates whether improved evidence coverage translates into improved answer generation.
+Experiment 01B investigates whether improvements in retrieval depth
+and evidence coverage translate into improvements in answer generation.
 
-Generation conditions:
-
-```text
-k = 0
-k = 1
-k = 3
-k = 5
-k = 10
-```
-
-Metrics:
-
-- Exact Match
-- Token-level F1
-
-### Five-Question Pilot
-
-| k | Exact Match | Token F1 |
-|---|---:|---:|
-| 0 | 0.200 | 0.257 |
-| 1 | 0.000 | 0.000 |
-| 3 | 0.000 | 0.040 |
-| 5 | 0.200 | 0.231 |
-| 10 | 0.600 | 0.773 |
-
-The five-question run was used only to validate the experimental pipeline.
-
-Because the pilot contains only five questions, these numbers are **not treated as final experimental evidence**.
-
-### Full Experiment
+The experiment evaluates:
 
 ```text
 100 questions × 5 retrieval conditions = 500 generations
 ```
 
-Status:
+### Results
 
-**Running / Pending analysis**
+| k | Exact Match | Token F1 |
+|---|---:|---:|
+| 0 | 0.240 | 0.326 |
+| 1 | 0.200 | 0.276 |
+| 3 | 0.210 | 0.309 |
+| 5 | 0.330 | 0.452 |
+| 10 | 0.390 | 0.559 |
+
+### Combined Retrieval and Generation Results
+
+| k | Supporting Recall | Complete Evidence | Exact Match | Token F1 |
+|---|---:|---:|---:|---:|
+| 0 | — | — | 0.240 | 0.326 |
+| 1 | 0.430 | 0.000 | 0.200 | 0.276 |
+| 3 | 0.715 | 0.450 | 0.210 | 0.309 |
+| 5 | 0.825 | 0.650 | 0.330 | 0.452 |
+| 10 | 1.000 | 1.000 | 0.390 | 0.559 |
+
+### Initial Observation
+
+Retrieval quality improved consistently as retrieval depth increased.
+
+Generation quality, however, did not improve monotonically at low
+retrieval depths.
+
+The no-retrieval baseline achieved an Exact Match score of 0.240 and
+Token F1 of 0.326.
+
+Providing only the top-1 retrieved document reduced performance to
+0.200 Exact Match and 0.276 F1.
+
+At k=3, retrieval coverage improved substantially, but generation
+performance remained slightly below the no-retrieval baseline.
+
+Generation performance improved more clearly once retrieval depth
+reached k=5 and k=10.
+
+The results suggest that simply supplying retrieved context is not
+necessarily sufficient. Incomplete evidence may provide less useful
+context than either more complete retrieval or, in some cases, no
+retrieval at all.
+
+Further analysis is required to determine whether these effects are
+caused by evidence completeness, retrieval noise, generator behavior,
+or the model's use of parametric knowledge.
 
 ---
 
