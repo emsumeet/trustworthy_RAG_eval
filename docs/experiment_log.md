@@ -160,12 +160,13 @@ Combined Experiment 01 Results
 
 | k  |	Supporting Recall.  |	Complete Evidence.   |	Exact Match.  |	Token F1 |
 |---|---:|---:|
-|0	|—	|—	|0.240	|0.326
-|1	|0.430	|0.000	|0.200	|0.276
-|3	|0.715	|0.450	|0.210	|0.309
-|5	|0.825	|0.650	|0.330	|0.452
-|10	|1.000	|1.000	|0.390	|0.559
+|0	|—	|—	|0.240	|0.326|
+|1	|0.430	|0.000	|0.200	|0.276|
+|3	|0.715	|0.450	|0.210	|0.309|
+|5	|0.825	|0.650	|0.330	|0.452|
+|10	|1.000	|1.000	|0.390	|0.559|
 
+---
 
 ## Initial Analysis
 Experiment 01A showed a monotonic increase in retrieval coverage as k
