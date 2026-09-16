@@ -157,7 +157,9 @@ Pending.
 ## Combined Exp 01 Results
 
 Combined Experiment 01 Results
-| k  |	Supporting Recall.  |	Complete Evidence.   |	Exact Match.  |	Token F1
+
+| k  |	Supporting Recall.  |	Complete Evidence.   |	Exact Match.  |	Token F1 |
+|---|---:|---:|
 |0	|—	|—	|0.240	|0.326
 |1	|0.430	|0.000	|0.200	|0.276
 |3	|0.715	|0.450	|0.210	|0.309
